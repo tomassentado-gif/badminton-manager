@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101a2c">
+  <title>Badminton Manager</title>
+  <style>
+    :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#eef3fb;background:#0b1220;font-synthesis:none}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 80% 0%,#1b3150 0,transparent 32%),#0b1220}
+    button{font:inherit;cursor:pointer}.app{max-width:1440px;margin:auto;padding:26px}
+    header{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:24px}
+    .brand{display:flex;align-items:center;gap:12px}.logo{width:44px;height:44px;border-radius:13px;background:#b7f36b;color:#12200c;display:grid;place-items:center;font-size:23px;font-weight:900}
+    h1{font-size:20px;margin:0;letter-spacing:-.5px}.sub{color:#91a2ba;font-size:12px;margin-top:3px}
+    .season{border:1px solid #293a53;background:#142137;padding:10px 14px;border-radius:12px;color:#c9d5e5;font-size:13px}
+    .hero{background:linear-gradient(110deg,#1c3453,#15253b 65%,#203b32);border:1px solid #314964;border-radius:20px;padding:25px;display:grid;grid-template-columns:1.5fr 1fr;gap:24px;align-items:center}
+    .eyebrow{color:#b7f36b;text-transform:uppercase;font-weight:800;letter-spacing:1.5px;font-size:10px}
+    .hero h2{font-size:clamp(25px,4vw,38px);letter-spacing:-1.2px;margin:8px 0}.hero p{color:#b8c7d9;margin:0;line-height:1.6;max-width:580px;font-size:14px}
+    .hero-actions{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}.primary,.secondary{border:0;border-radius:10px;padding:11px 15px;font-weight:750;font-size:13px}.primary{background:#b7f36b;color:#14210e}.secondary{background:#263b56;color:#e5edf7;border:1px solid #405875}
+    .next-event{background:#101c2d99;border:1px solid #486078;border-radius:15px;padding:17px}.event-label{font-size:10px;color:#9aacc2;text-transform:uppercase;letter-spacing:1.2px;font-weight:800}.event-title{font-weight:800;font-size:18px;margin:8px 0 4px}.event-meta{color:#b3c2d4;font-size:12px}.event-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:18px;padding-top:14px;border-top:1px solid #40536b}.tag{background:#293e4d;color:#c6f78e;padding:5px 8px;border-radius:7px;font-size:10px;font-weight:800}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin:16px 0 22px}.stat{background:#121e30;border:1px solid #25364d;border-radius:14px;padding:15px}.stat-label{color:#91a2ba;font-size:11px}.stat-value{font-size:25px;font-weight:850;margin:7px 0 2px;letter-spacing:-.7px}.stat-note{font-size:10px;color:#9aacc2}
+    .layout{display:grid;grid-template-columns:220px 1fr;gap:18px}.nav{background:#111d2e;border:1px solid #25364d;border-radius:15px;padding:10px;height:max-content}.nav button{display:flex;width:100%;gap:10px;align-items:center;text-align:left;background:transparent;color:#a9b8ca;border:0;padding:12px;border-radius:9px;font-size:13px;margin:2px 0}.nav button.active,.nav button:hover{background:#23364d;color:#fff}.nav .ico{width:19px;text-align:center}
+    .content{min-width:0}.section-head{display:flex;justify-content:space-between;align-items:center;margin:0 0 13px}.section-head h3{margin:0;font-size:17px}.muted{color:#8fa1b9;font-size:12px}
+    .cards{display:grid;grid-template-columns:1.25fr 1fr;gap:14px}.panel{background:#121e30;border:1px solid #25364d;border-radius:15px;padding:17px;min-width:0}.panel h4{font-size:13px;margin:0 0 15px}.progress-row{display:flex;justify-content:space-between;font-size:11px;color:#b5c3d4;margin:12px 0 7px}.bar{height:7px;background:#26364a;border-radius:10px;overflow:hidden}.bar span{display:block;height:100%;background:#b7f36b;border-radius:10px}.list{display:grid;gap:0}.item{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #24344a;font-size:12px}.item:last-child{border:0}.item strong{display:block;font-size:12px}.item small{color:#8fa1b9;font-size:10px}.result{font-weight:800;color:#b7f36b}
+    .tab-panel{display:none}.tab-panel.active{display:block}.actions{display:flex;gap:8px;flex-wrap:wrap}.action{background:#20334b;color:#e5edf7;border:1px solid #344b66;border-radius:9px;padding:9px 11px;font-size:11px}.action:hover{border-color:#b7f36b}.notice{background:#1b2d28;border:1px solid #3b6549;color:#d2f4c0;padding:12px;border-radius:10px;font-size:12px;margin-top:12px;line-height:1.5}
+    .player{display:flex;align-items:center;gap:13px}.avatar{width:44px;height:44px;border-radius:13px;background:#293f58;display:grid;place-items:center;font-weight:900;color:#c7f58c}.player-name{font-weight:800;font-size:14px}.player-meta{color:#91a2ba;font-size:11px;margin-top:3px}
+    footer{text-align:center;color:#64758d;font-size:10px;padding:25px 0 8px}
+    @media(max-width:800px){.app{padding:15px}.hero{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:1fr}.nav{display:grid;grid-template-columns:repeat(3,1fr)}.nav button{justify-content:center;padding:10px 5px;font-size:11px}.nav .ico{display:none}.cards{grid-template-columns:1fr}}
+    @media(max-width:480px){header{align-items:flex-start}.season{font-size:11px}.stats{gap:8px}.stat{padding:12px}.stat-value{font-size:22px}.nav{grid-template-columns:repeat(2,1fr)}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="brand"><div class="logo">B</div><div><h1>BADMINTON MANAGER</h1><div class="sub">A tua carreira. As tuas decisões.</div></div></div>
+    <div class="season" id="dateLabel">Época 2026/27 · Semana 1</div>
+  </header>
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Modo carreira · jogador</div>
+      <h2>Constrói o teu caminho<br>até ao topo.</h2>
+      <p>Gere a tua evolução dentro e fora do campo. Treina, compete, toma decisões e transforma potencial em resultados.</p>
+      <div class="hero-actions"><button class="primary" onclick="advanceWeek()">Avançar semana →</button><button class="secondary" onclick="showTab('training')">Planear treino</button></div>
+    </div>
+    <div class="next-event"><div class="event-label">Próximo desafio</div><div class="event-title" id="eventTitle">Open Regional</div><div class="event-meta" id="eventMeta">Singulares · Dentro de 2 semanas</div><div class="event-bottom"><span class="muted">Objetivo: quartos de final</span><span class="tag">TORNEIO</span></div></div>
+  </section>
+  <section class="stats">
+    <div class="stat"><div class="stat-label">Ranking nacional</div><div class="stat-value" id="rank">#24</div><div class="stat-note">Singulares masculinos</div></div>
+    <div class="stat"><div class="stat-label">Nível geral</div><div class="stat-value" id="level">72 <span style="font-size:12px;color:#b7f36b">OVR</span></div><div class="stat-note">Potencial: 88</div></div>
+    <div class="stat"><div class="stat-label">Forma atual</div><div class="stat-value" id="form">84%</div><div class="stat-note">Pronto para competir</div></div>
+    <div class="stat"><div class="stat-label">Reputação</div><div class="stat-value" id="rep">31</div><div class="stat-note">Circuito nacional</div></div>
+  </section>
+  <div class="layout">
+    <nav class="nav">
+      <button class="active" data-tab="overview" onclick="showTab('overview')"><span class="ico">⌂</span> Visão geral</button>
+      <button data-tab="training" onclick="showTab('training')"><span class="ico">◈</span> Treino</button>
+      <button data-tab="competition" onclick="showTab('competition')"><span class="ico">🏆</span> Competições</button>
+      <button data-tab="life" onclick="showTab('life')"><span class="ico">◷</span> Vida pessoal</button>
+      <button data-tab="profile" onclick="showTab('profile')"><span class="ico">◎</span> Perfil</button>
+    </nav>
+    <main class="content">
+      <section class="tab-panel active" id="tab-overview">
+        <div class="section-head"><h3>Centro de desempenho</h3><span class="muted" id="weekSummary">Semana 1 da época</span></div>
+        <div class="cards">
+          <div class="panel"><h4>Estado do atleta</h4><div class="player"><div class="avatar">TR</div><div><div class="player-name">Tomás Rodrigues</div><div class="player-meta">Portugal · 17 anos · Singulares / Pares</div></div></div>
+            <div class="progress-row"><span>Condição física</span><b id="fitnessText">84%</b></div><div class="bar"><span id="fitnessBar" style="width:84%"></span></div>
+            <div class="progress-row"><span>Confiança</span><b id="confidenceText">78%</b></div><div class="bar"><span id="confidenceBar" style="width:78%"></span></div>
+            <div class="progress-row"><span>Motivação</span><b id="motivationText">92%</b></div><div class="bar"><span id="motivationBar" style="width:92%"></span></div>
+          </div>
+          <div class="panel"><h4>Agenda próxima</h4><div class="list" id="agenda"><div class="item"><div><strong>Treino técnico</strong><small>Segunda · Pavilhão</small></div><span class="tag">TREINO</span></div><div class="item"><div><strong>Ginásio</strong><small>Quarta · Preparação física</small></div><span class="tag">FÍSICO</span></div><div class="item"><div><strong>Open Regional</strong><small>Daqui a 2 semanas</small></div><span class="tag">TORNEIO</span></div></div></div>
+        </div>
+        <div class="panel" style="margin-top:14px"><h4>Últimas novidades</h4><div class="list" id="news"><div class="item"><div><strong>Nova época iniciada</strong><small>Define o teu plano e prepara os primeiros torneios.</small></div><span class="result">●</span></div></div></div>
+      </section>
+      <section class="tab-panel" id="tab-training">
+        <div class="section-head"><h3>Planeamento de treino</h3><span class="muted">Escolhe o foco da semana</span></div>
+        <div class="panel"><h4>Plano semanal</h4><div class="progress-row"><span>Capacidade técnica</span><b id="techText">76</b></div><div class="bar"><span id="techBar" style="width:76%"></span></div><div class="progress-row"><span>Capacidade física</span><b id="physicalText">73</b></div><div class="bar"><span id="physicalBar" style="width:73%"></span></div><div class="progress-row"><span>Capacidade mental</span><b id="mentalText">70</b></div><div class="bar"><span id="mentalBar" style="width:70%"></span></div>
+        <div class="notice">Cada semana permite escolher um foco principal. A evolução depende do equilíbrio entre treino, descanso e vida pessoal.</div></div>
+        <div class="panel" style="margin-top:14px"><h4>Escolher sessão prioritária</h4><div class="actions"><button class="action" onclick="train('technical')">🏸 Técnica e consistência</button><button class="action" onclick="train('physical')">⚡ Explosividade e velocidade</button><button class="action" onclick="train('tactical')">♟ Tática e análise</button><button class="action" onclick="train('recovery')">🌿 Recuperação</button></div><div class="muted" style="margin-top:12px" id="trainingFeedback">Ainda não escolheste o foco desta semana.</div></div>
+      </section>
+      <section class="tab-panel" id="tab-competition">
+        <div class="section-head"><h3>Calendário competitivo</h3><span class="muted">Época 2026/27</span></div>
+        <div class="panel"><h4>Próximos torneios</h4><div class="list" id="tournaments"><div class="item"><div><strong>Open Regional</strong><small>Singulares · Nacional</small></div><span class="tag">SEMANA 3</span></div><div class="item"><div><strong>Campeonato Nacional S19</strong><small>Singulares e pares · Nacional</small></div><span class="tag">SEMANA 6</span></div><div class="item"><div><strong>Portugal Junior International</strong><small>Internacional · Juniores</small></div><span class="tag">SEMANA 9</span></div></div></div>
+        <div class="panel" style="margin-top:14px"><h4>Preparação competitiva</h4><p class="muted">Quando chegares à semana de torneio, poderás disputar a competição e acompanhar o resultado, a confiança e a evolução do ranking.</p><button class="primary" onclick="compete()">Simular próximo torneio</button><div id="competitionFeedback" class="muted" style="margin-top:12px"></div></div>
+      </section>
+      <section class="tab-panel" id="tab-life">
+        <div class="section-head"><h3>Vida pessoal</h3><span class="muted">O equilíbrio também conta</span></div>
+        <div class="cards"><div class="panel"><h4>Bem-estar</h4><div class="progress-row"><span>Energia</span><b id="energyText">80%</b></div><div class="bar"><span id="energyBar" style="width:80%"></span></div><div class="progress-row"><span>Vida social</span><b id="socialText">70%</b></div><div class="bar"><span id="socialBar" style="width:70%"></span></div><div class="progress-row"><span>Escola</span><b id="schoolText">86%</b></div><div class="bar"><span id="schoolBar" style="width:86%"></span></div></div>
+        <div class="panel"><h4>Decisões da semana</h4><div class="list"><div class="item"><div><strong>Estudar para um teste</strong><small>Melhora o rendimento escolar</small></div><button class="action" onclick="life('study')">Escolher</button></div><div class="item"><div><strong>Tempo com amigos</strong><small>Reforça o equilíbrio pessoal</small></div><button class="action" onclick="life('friends')">Escolher</button></div><div class="item"><div><strong>Descanso extra</strong><small>Ajuda a recuperar energia</small></div><button class="action" onclick="life('rest')">Escolher</button></div></div></div></div>
+      </section>
+      <section class="tab-panel" id="tab-profile">
+        <div class="section-head"><h3>Perfil do atleta</h3><span class="muted">Dados de carreira</span></div>
+        <div class="panel"><div class="player"><div class="avatar">TR</div><div><div class="player-name">Tomás Rodrigues</div><div class="player-meta">Portugal · 17 anos · Pé dominante: direito</div></div></div><div class="cards" style="margin-top:20px"><div><h4>Atributos técnicos</h4><div class="progress-row"><span>Consistência</span><b>78</b></div><div class="progress-row"><span>Jogo de rede</span><b>75</b></div><div class="progress-row"><span>Ataque</span><b>74</b></div><div class="progress-row"><span>Defesa</span><b>77</b></div></div><div><h4>Atributos de jogo</h4><div class="progress-row"><span>Velocidade</span><b>79</b></div><div class="progress-row"><span>Resistência</span><b>73</b></div><div class="progress-row"><span>Tomada de decisão</span><b>70</b></div><div class="progress-row"><span>Competitividade</span><b>82</b></div></div></div></div>
+      </section>
+    </main>
+  </div>
+  <footer>BADMINTON MANAGER · Primeira versão jogável · Os teus dados ficam apenas nesta sessão.</footer>
+</div>
+<script>
+const state={week:1,rank:24,level:72,form:84,rep:31,fitness:84,confidence:78,motivation:92,energy:80,social:70,school:86,tech:76,physical:73,mental:70,played:false,trained:false,lifeDone:false};
+function showTab(name){document.querySelectorAll('.tab-panel').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.tab===name));document.getElementById('tab-'+name).classList.add('active')}
+function clamp(n){return Math.max(0,Math.min(100,n))}
+function setBar(key,val){state[key]=clamp(val);const t=document.getElementById(key+'Text'),b=document.getElementById(key+'Bar');if(t)t.textContent=state[key]+'%';if(b)b.style.width=state[key]+'%'}
+function update(){document.getElementById('dateLabel').textContent='Época 2026/27 · Semana '+state.week;document.getElementById('weekSummary').textContent='Semana '+state.week+' da época';document.getElementById('rank').textContent='#'+state.rank;document.getElementById('level').innerHTML=state.level+' <span style="font-size:12px;color:#b7f36b">OVR</span>';document.getElementById('form').textContent=state.form+'%';document.getElementById('rep').textContent=state.rep;['fitness','confidence','motivation','energy','social','school'].forEach(k=>setBar(k,state[k]));['tech','physical','mental'].forEach(k=>{document.getElementById(k+'Text').textContent=state[k];document.getElementById(k+'Bar').style.width=state[k]+'%'});document.getElementById('eventMeta').textContent='Singulares · '+Math.max(0,3-state.week)+' semanas restantes'}
+function log(title,desc){const n=document.getElementById('news'),d=document.createElement('div');d.className='item';const a=document.createElement('div'),b=document.createElement('strong'),c=document.createElement('small');b.textContent=title;c.textContent=desc;a.append(b,c);const s=document.createElement('span');s.className='result';s.textContent='●';d.append(a,s);n.prepend(d)}
+function train(type){if(state.trained){document.getElementById('trainingFeedback').textContent='Já escolheste o foco desta semana. Avança a semana para continuar.';return}state.trained=true;let msg='';if(type==='technical'){state.tech=clamp(state.tech+3);state.level++;state.fitness-=5;msg='A técnica e a consistência melhoraram. A carga de treino também exige recuperação.'}if(type==='physical'){state.physical=clamp(state.physical+3);state.level++;state.fitness-=8;msg='A capacidade física evoluiu. Gere bem a recuperação.'}if(type==='tactical'){state.mental=clamp(state.mental+3);state.confidence=clamp(state.confidence+3);msg='A leitura de jogo e a confiança receberam um impulso.'}if(type==='recovery'){state.fitness=clamp(state.fitness+10);state.energy=clamp(state.energy+8);msg='Semana orientada para recuperar e voltar mais fresco.'}update();document.getElementById('trainingFeedback').textContent=msg;log('Plano de treino definido',msg)}
+function life(type){if(state.lifeDone){alert('Já tomaste uma decisão pessoal esta semana.');return}state.lifeDone=true;let msg='';if(type==='study'){state.school=clamp(state.school+7);state.energy-=5;msg='Deste prioridade à escola. Bom trabalho a gerir responsabilidades.'}if(type==='friends'){state.social=clamp(state.social+10);state.motivation=clamp(state.motivation+3);msg='O tempo com amigos ajudou a equilibrar a semana.'}if(type==='rest'){state.energy=clamp(state.energy+12);state.fitness=clamp(state.fitness+5);msg='O descanso ajudou a recuperar energia.'}update();log('Decisão pessoal',msg);alert(msg)}
+function advanceWeek(){state.week++;state.trained=false;state.lifeDone=false;state.played=false;state.energy=clamp(state.energy-3+Math.round(Math.random()*5));state.fitness=clamp(state.fitness+5);state.motivation=clamp(state.motivation+(state.social>55?1:-2));state.form=clamp(Math.round((state.fitness+state.confidence+state.motivation)/3));update();log('Semana '+state.week+' iniciada','Nova semana: define o treino e gere a tua rotina.');if(state.week===3){document.getElementById('eventTitle').textContent='Open Regional';document.getElementById('eventMeta').textContent='Torneio disponível esta semana'}else if(state.week>3){document.getElementById('eventTitle').textContent='Campeonato Nacional S19';document.getElementById('eventMeta').textContent='Próximo objetivo competitivo'} }
+function compete(){if(state.week<3){document.getElementById('competitionFeedback').textContent='O torneio ainda não começou. Avança até à semana 3.';return}if(state.played){document.getElementById('competitionFeedback').textContent='Já disputaste o torneio desta fase.';return}state.played=true;const score=state.form+state.tech+state.mental+Math.floor(Math.random()*35);let result;if(score>260){result='Meias-finais!';state.rank=Math.max(1,state.rank-3);state.rep+=5;state.confidence=clamp(state.confidence+8)}else if(score>235){result='Quartos de final.';state.rank=Math.max(1,state.rank-1);state.rep+=3;state.confidence=clamp(state.confidence+4)}else{result='Eliminado na fase inicial.';state.confidence=clamp(state.confidence-3)}state.fitness=clamp(state.fitness-12);state.form=clamp(state.form-6);update();document.getElementById('competitionFeedback').textContent='Resultado: '+result+' O teu desempenho também depende da preparação e da forma do dia.';log('Open Regional — '+result,'Ranking e confiança atualizados após a competição.')}
+update();
+</script>
+</body>
+</html>
